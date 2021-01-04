@@ -13,7 +13,7 @@ from LoginWindow import LoginScreen
 
 class MainScreen():
     def showsplashscreen(self):
-        self.pix = QPixmap('parking.png')
+        self.pix = QPixmap('splash_image.jpeg')
         self.splaash = QSplashScreen(self.pix,Qt.WindowStaysOnTopHint)
         self.splaash.show()
 

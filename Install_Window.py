@@ -22,19 +22,30 @@ class InstallWindow(QWidget):
         # Below code is used to create text fields for all entries in install window
         # We use self for all of this to convert from local to global object
         self.input_db_name = QLineEdit()
+        self.input_db_name.setText('pythonproject1')
+
         self.input_db_username = QLineEdit()
+        self.input_db_username.setText('user')
+
         self.input_db_password = QLineEdit()
+        self.input_db_password.setText('password')
+
         self.input_admin_username = QLineEdit()
+        self.input_admin_username.setText('admin')
+
         self.input_admin_password = QLineEdit()
+        self.input_admin_password.setText('admin')
+
         self.input_no_of_two_wheelers = QLineEdit()
         self.input_no_of_four_wheelers = QLineEdit()
 
         # A button is created of name button_save with text in it has Save Configuration
         button_save = QPushButton('Save Configuration')
+        button_save.setStyleSheet("background:#B5651D;color:#fff;padding:8px 0px;font-size:20px;font-weight:bold")
 
         # This label is red to indicate error in filling details
         self.error_label = QLabel()
-        self.error_label.setStyleSheet("solor:red")
+        self.error_label.setStyleSheet("color:red")
 
         layout.addWidget(label_db_name)
         layout.addWidget(self.input_db_name)
@@ -74,11 +85,11 @@ class InstallWindow(QWidget):
             self.error_label.setText("Please Enter valid DB Password")
             return
 
-        if self.input_admin_username_name.text() == "":
+        if self.input_admin_username.text() == "":
             self.error_label.setText("Please Enter valid Admin Username")
             return
 
-        if self.input_admin_password_name.text() == "":
+        if self.input_admin_password.text() == "":
             self.error_label.setText("Please Enter valid Admin password")
             return
 
@@ -86,7 +97,7 @@ class InstallWindow(QWidget):
             self.error_label.setText("Please Enter valid number of two wheeler spaces")
             return
 
-        if self.input_admin_password_name.text() == "":
+        if self.input_no_of_four_wheelers.text() == "":
             self.error_label.setText("Please Enter valid number of four wheeler spaces")
             return
 
@@ -99,11 +110,14 @@ class InstallWindow(QWidget):
         file.close()
         # Creating DBOperation instance and calling all functions in correct order
         # for specified execution flow
+        print("creating database object in install window")
         dboperation = DBOperation()
         dboperation.createTables()
+        print('In install window after creating tables')
         dboperation.InsertAdmin(self.input_admin_username.text(),self.input_admin_password.text())
-        dboperation.InsertOneTimeData(self.input_no_of_two_wheelers.text(),self.input_no_of_four_wheelers.text())
-
+        print('In install window after inserting values into admin tables')
+        dboperation.InsertOneTimeData(int(self.input_no_of_two_wheelers.text()),int(self.input_no_of_four_wheelers.text()))
+        print('In install window after inserting one time data tables')
         self.close()
         self.login = LoginScreen()
         self.login.showloginscreen()
